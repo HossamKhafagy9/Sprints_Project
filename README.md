@@ -91,10 +91,10 @@ Configure credentials, repository URL, and branch discovery.
 
 ## Step 7: Run the Pipeline
 1. Using the provided Jenkinsfile, the pipeline will:
-
-   -Build Docker images
-   -Push images to ECR
-   -Deploy Kubernetes resources
+   
+   Build Docker images
+   Push images to ECR
+   Deploy Kubernetes resources
    
 3. Commit and push changes to GitHub.
   --Jenkins will automatically trigger the pipeline and execute defined actions.
