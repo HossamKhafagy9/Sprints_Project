@@ -4,56 +4,56 @@ Sprints Final Project
 
 This guide outlines the steps to set up Jenkins for continuous integration and deployment using Terraform, Ansible, AWS, and GitHub. Follow these instructions to get your environment up and running.
 
+After cloning the repo
+
 ## Step 1: Infrastructure Setup
 
 1. Initialize Terraform:
-terraform init
-
-markdown
-Copy code
-
-2. Plan and review the infrastructure changes:
-terraform plan
-
-markdown
-Copy code
-
-3. Apply the infrastructure changes:
-terraform apply
-
-markdown
-Copy code
-
-## Step 2: Install Jenkins
-
-1. Run Ansible playbook to install Docker, AWS CLI, and Kubernetes tools:
 ```shell
-ansible-playbook docker.yml -i inventory.txt
-ansible-playbook awscli.yml -i inventory.txt
-ansible-playbook kubectl.yml -i inventory.txt
+terraform init
+```
+2. Plan and review the infrastructure changes:
+ 
+```shell
+terraform plan
+```
+3. Apply the infrastructure changes:
+   
+```shell
+terraform apply
+```
+## Step 2: Install Tools
+
+1. Run Ansible playbook to install Docker, AWS CLI, Kubernetes tools, and Jenkins:
+   change the inventory file with the ip of your instance and add the key
+   
+```shell
+ansible-playbook -i inventory docker.yml
+```
+```shell
+ansible-playbook -i inventory awscli.yml
+```
+```shell
+ansible-playbook -i inventory kubectl.yml
+```
+```shell
+ansible-playbook -i inventory jenkins.yml
+```
 Run Ansible playbook to install Jenkins:
 
-shell
-Copy code
-ansible-playbook Jenkins.yml -i inventory.txt
-Connect via SSH to the Jenkins server:
+## Step 3: Jenkins Configuration 
 
-shell
-Copy code
-ssh <Jenkins_Server_IP> -i <Path_to_Private_Key>
-Retrieve the initial admin password:
+1. Open <IP of instnace:8080>
 
-shell
-Copy code
+2. Connect to your instnace then retrieve the initial admin password:
+
+```shell
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
-Copy the output and use it to unlock Jenkins during setup.
+```
+3.Install suggested plugins then create a Jenkins  account:
 
-Step 3: Jenkins Configuration
-Install suggested plugins and create a Jenkins user account:
 
-Access Jenkins via the web browser.
-Create a user account with username, password, and email.
-Configure AWS ECR:
+## Step 4: Configure AWS ECR:
 
 Log in to AWS and retrieve the ECR repository URL.
 Manage Jenkins Credentials:
