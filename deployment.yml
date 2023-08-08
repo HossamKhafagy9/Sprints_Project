@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sprints-app
+  template:
+    metadata:
+      labels:
+        app: sprints-app
+    spec:
+      containers:
+        - name: sprints
+          image: <IMAGE-NAME>
+          env:
+            - name: MYSQL_DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-configmap
+                  key: MYSQL_DATABASE_HOST
+            - name: MYSQL_DATABASE_PORT
+              value: "3306"
+            - name: MYSQL_DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: DB_NAME
+            - name: MYSQL_DATABASE_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-configmap
+                  key: MYSQL_DATABASE_USER
+            - name: MYSQL_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_DATABASE_PASSWORD
+          ports:
+            - containerPort: 5002
+          command: ["python", "app.py"]
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5002
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5002
+            initialDelaySeconds: 5
+            periodSeconds: 5
+

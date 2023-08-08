@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-app
+spec:
+  selector:
+    app: sprints-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5002
+  type: LoadBalancer
