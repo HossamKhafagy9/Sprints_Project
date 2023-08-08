@@ -57,9 +57,10 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 1. To create jenkins credentials we acess Jenkins > manage Jenkins > credentials > system > global credentials 
    get aws credentials using
 
-   ```shell
-   Cat .aws/credentials
-   ```
+```shell
+Cat .aws/credentials
+```
+
 2. Generate GitHub Token:
 
 In your GitHub account, go to Settings > Developer settings > Personal access tokens.
@@ -68,17 +69,24 @@ Generate a new token with appropriate permissions.
 
 Then add the credentials in jenkins as the previous step
 
-## Step 5:
-Configure GitHub Webhook:
+## Step 5: Configure GitHub Webhook:
 
-In your GitHub repository, go to Settings > Webhooks.
-Add a new webhook with the Jenkins server's public IP and port 8080.
-Step 4: Configure Jenkins Pipeline
+In your GitHub repository, go to Settings > Webhooks > Add webhook.
+
+1. Payload URL with the Jenkins server's public IP and port 8080.
+2. Change Content type to application/json
+3. Which events would you like to trigger this webhook? the you choose (send me everything)
+4. "Add Webhook"
+
+
+##Step 6: Configure Jenkins Pipeline
+1.get
 Create a Multibranch Pipeline in Jenkins:
 
-Access Jenkins via the web browser.
 Create a new pipeline for your GitHub repository.
+
 Configure credentials, repository URL, and branch discovery.
+
 Build Configuration:
 
 Customize the pipeline configuration based on your requirements.
