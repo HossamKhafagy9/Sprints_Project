@@ -43,7 +43,7 @@ Run Ansible playbook to install Jenkins:
 
 ## Step 3: Jenkins Configuration 
 
-1. Open <IP of instnace:8080>
+1. Open ip of intstance with port 8080
 
 2. Connect to your instnace then retrieve the initial admin password:
 
