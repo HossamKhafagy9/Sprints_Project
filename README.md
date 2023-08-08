@@ -75,8 +75,11 @@ Add the credentials in Jenkins.
 
 ## Step 5: Configure GitHub Webhook
 In your GitHub repository, go to Settings > Webhooks > Add webhook:
+
 Payload URL: Jenkins server's public IP with port 8080.
+
 Change Content type to application/json.
+
 Choose desired events and add the webhook.
 
 ## Step 6: Configure Jenkins Pipeline
@@ -87,9 +90,9 @@ Create a Multibranch Pipeline in Jenkins for your GitHub repository.
 Configure credentials, repository URL, and branch discovery.
 
 ## Step 7: Run the Pipeline
-Using the provided Jenkinsfile, the pipeline will:
-Build Docker images
-Push images to ECR
-Deploy Kubernetes resources
-Commit and push changes to GitHub.
-Jenkins will automatically trigger the pipeline and execute defined actions.
+1. Using the provided Jenkinsfile, the pipeline will:
+  --Build Docker images
+  --Push images to ECR
+  --Deploy Kubernetes resources
+2. Commit and push changes to GitHub.
+  --Jenkins will automatically trigger the pipeline and execute defined actions.
