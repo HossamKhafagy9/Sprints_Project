@@ -50,38 +50,43 @@ ansible-playbook -i inventory kubectl.yml
 ansible-playbook -i inventory jenkins.yml
 ```
 
-Step 3: Jenkins Configuration
+## Step 3: Jenkins Configuration
 Open the instance IP with port 8080 in a web browser.
 
 SSH into your instance and retrieve the initial admin password:
 
-shell
-Copy code
+```shell
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+```
+
 Install suggested plugins and create a Jenkins account.
 
-Step 4: Configure Jenkins Credentials
+## Step 4: Configure Jenkins Credentials
 In Jenkins, navigate to Manage Jenkins > Credentials > System > Global Credentials:
 
 Add your AWS credentials using:
-shell
-Copy code
-cat .aws/credentials
+
+```shell
+Cat .aws/credentials
+```
 Generate a GitHub Token in your GitHub account's Settings > Developer settings > Personal access tokens.
 
 Add the credentials in Jenkins.
-Step 5: Configure GitHub Webhook
+
+## Step 5: Configure GitHub Webhook
 In your GitHub repository, go to Settings > Webhooks > Add webhook:
 Payload URL: Jenkins server's public IP with port 8080.
 Change Content type to application/json.
 Choose desired events and add the webhook.
-Step 6: Configure Jenkins Pipeline
+
+## Step 6: Configure Jenkins Pipeline
 Get the ECR URL from AWS and add it to the Jenkinsfile.
 
 Create a Multibranch Pipeline in Jenkins for your GitHub repository.
 
 Configure credentials, repository URL, and branch discovery.
-Step 7: Run the Pipeline
+
+## Step 7: Run the Pipeline
 Using the provided Jenkinsfile, the pipeline will:
 Build Docker images
 Push images to ECR
