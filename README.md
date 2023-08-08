@@ -39,7 +39,6 @@ ansible-playbook -i inventory kubectl.yml
 ```shell
 ansible-playbook -i inventory jenkins.yml
 ```
-Run Ansible playbook to install Jenkins:
 
 ## Step 3: Jenkins Configuration 
 
@@ -53,17 +52,23 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 3.Install suggested plugins then create a Jenkins  account:
 
 
-## Step 4: Configure AWS ECR:
+## Step 4: Configure Jenkins Credentials:
 
-Log in to AWS and retrieve the ECR repository URL.
-Manage Jenkins Credentials:
+1. To create jenkins credentials we acess Jenkins > manage Jenkins > credentials > system > global credentials 
+   get aws credentials using
 
-Go to Manage Jenkins > Manage Credentials > Global Credentials.
-Add your AWS credentials: use cat .aws/credentials to get the details.
-Generate GitHub Token:
+   ```shell
+   Cat .aws/credentials
+   ```
+2. Generate GitHub Token:
 
 In your GitHub account, go to Settings > Developer settings > Personal access tokens.
+
 Generate a new token with appropriate permissions.
+
+Then add the credentials in jenkins as the previous step
+
+## Step 5:
 Configure GitHub Webhook:
 
 In your GitHub repository, go to Settings > Webhooks.
