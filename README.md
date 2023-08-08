@@ -1,10 +1,20 @@
-# Sprints_Project
-Sprints Final Project
-# Setting up Jenkins with Terraform, Ansible, AWS, and GitHub
+# Sprints_Project - Setting up Jenkins with Terraform, Ansible, AWS, and GitHub
 
-This guide outlines the steps to set up Jenkins for continuous integration and deployment using Terraform, Ansible, AWS, and GitHub. Follow these instructions to get your environment up and running.
+Welcome to the setup guide for configuring Jenkins with Terraform, Ansible, AWS, and GitHub. This guide provides step-by-step instructions to establish an environment for continuous integration and deployment. Follow these steps to get started with your project.
 
-After cloning the repo
+## Overview
+
+This guide will help you set up Jenkins on a remote server, automate infrastructure deployment using Terraform, manage tools with Ansible, integrate with AWS services, and enable GitHub for automated testing and deployment.
+
+## Table of Contents
+
+1. [Infrastructure Setup](#step-1-infrastructure-setup)
+2. [Install Tools](#step-2-install-tools)
+3. [Jenkins Configuration](#step-3-jenkins-configuration)
+4. [Configure Jenkins Credentials](#step-4-configure-jenkins-credentials)
+5. [Configure GitHub Webhook](#step-5-configure-github-webhook)
+6. [Configure Jenkins Pipeline](#step-6-configure-jenkins-pipeline)
+7. [Run the Pipeline](#step-7-run-the-pipeline)
 
 ## Step 1: Infrastructure Setup
 
@@ -22,11 +32,11 @@ terraform plan
 ```shell
 terraform apply
 ```
-## Step 2: Install Tools
 
-1. Run Ansible playbook to install Docker, AWS CLI, Kubernetes tools, and Jenkins:
-   change the inventory file with the ip of your instance and add the key
-   
+## Step 2: Install Tools
+Install Docker, AWS CLI, Kubernetes tools, and Jenkins using Ansible:
+Update the inventory file with the instance IP and SSH key.
+
 ```shell
 ansible-playbook -i inventory docker.yml
 ```
@@ -40,52 +50,41 @@ ansible-playbook -i inventory kubectl.yml
 ansible-playbook -i inventory jenkins.yml
 ```
 
-## Step 3: Jenkins Configuration 
+Step 3: Jenkins Configuration
+Open the instance IP with port 8080 in a web browser.
 
-1. Open ip of intstance with port 8080
+SSH into your instance and retrieve the initial admin password:
 
-2. Connect to your instnace then retrieve the initial admin password:
-
-```shell
+shell
+Copy code
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
-```
-3.Install suggested plugins then create a Jenkins  account:
+Install suggested plugins and create a Jenkins account.
 
+Step 4: Configure Jenkins Credentials
+In Jenkins, navigate to Manage Jenkins > Credentials > System > Global Credentials:
 
-## Step 4: Configure Jenkins Credentials:
+Add your AWS credentials using:
+shell
+Copy code
+cat .aws/credentials
+Generate a GitHub Token in your GitHub account's Settings > Developer settings > Personal access tokens.
 
-1. To create jenkins credentials we acess Jenkins > manage Jenkins > credentials > system > global credentials 
-   get aws credentials using
+Add the credentials in Jenkins.
+Step 5: Configure GitHub Webhook
+In your GitHub repository, go to Settings > Webhooks > Add webhook:
+Payload URL: Jenkins server's public IP with port 8080.
+Change Content type to application/json.
+Choose desired events and add the webhook.
+Step 6: Configure Jenkins Pipeline
+Get the ECR URL from AWS and add it to the Jenkinsfile.
 
-```shell
-Cat .aws/credentials
-```
+Create a Multibranch Pipeline in Jenkins for your GitHub repository.
 
-2. Generate GitHub Token:
-
-In your GitHub account, go to Settings > Developer settings > Personal access tokens.
-
-Generate a new token with appropriate permissions.
-
-Then add the credentials in jenkins as the previous step
-
-## Step 5: Configure GitHub Webhook:
-
-In your GitHub repository, go to Settings > Webhooks > Add webhook.
-
-1. Payload URL with the Jenkins server's public IP and port 8080.
-2. Change Content type to application/json
-3. Which events would you like to trigger this webhook? the you choose (send me everything)
-4. "Add Webhook"
-
-
-## Step 6: Configure Jenkins Pipeline
-
-1. get ecr url from aws add it to jenkins file in the approprtiate location
-2. Create a Multibranch Pipeline in Jenkins
-3. Create a new pipeline for your GitHub repository.
-4. Configure credentials, repository URL, and branch discovery.
-
-## Step 7: Run the Pipeline
-Commit and push changes to your GitHub repository.
-Jenkins will automatically trigger the pipeline on new commits and perform the defined actions.
+Configure credentials, repository URL, and branch discovery.
+Step 7: Run the Pipeline
+Using the provided Jenkinsfile, the pipeline will:
+Build Docker images
+Push images to ECR
+Deploy Kubernetes resources
+Commit and push changes to GitHub.
+Jenkins will automatically trigger the pipeline and execute defined actions.
