@@ -1,0 +1,39 @@
+- name: Install Jenkins on EC2
+  hosts: ubuntu
+  become: true
+  vars:
+    jenkins_apt_key: "https://pkg.jenkins.io/debian/jenkins.io-2023.key"
+    jenkins_apt_repo: "deb https://pkg.jenkins.io/debian-stable binary/"
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+    - name: Install Java
+      apt:
+        name: openjdk-11-jdk
+        state: present
+
+    - name: Add Jenkins APT key
+      apt_key:
+        url: "{{ jenkins_apt_key }}"
+
+    - name: Add Jenkins APT repository
+      apt_repository:
+        repo: "{{ jenkins_apt_repo }}"
+        state: present
+        filename: jenkins
+
+    - name: Install Jenkins
+      apt:
+        name: jenkins
+        state: present
+
+    - name: Add user to sudo group
+      become: true
+      shell: sudo usermod -aG docker jenkins    
+
+    - name: Start Jenkins service
+      service:
+        name: jenkins
+        state: started
+        enabled: true

@@ -1,0 +1,27 @@
+---
+- name: Install AWS CLI
+  hosts: ubuntu
+  become: true
+
+  tasks:
+    - name: Install Python pip
+      apt:
+        name: python3-pip
+        state: present
+      become: true
+      become_method: sudo
+
+    - name: Install AWS CLI using pip
+      pip:
+        name: awscli
+        state: present
+      become: true
+      become_method: sudo
+      
+    - name: Check AWS CLI version
+      command: aws --version
+      register: aws_cli_output
+
+    - name: Display AWS CLI version
+      debug:
+        var: aws_cli_output.stdout_lines

@@ -1,0 +1,44 @@
+---
+- name: Install kubectl
+  hosts: ubuntu
+  become: true
+
+  tasks:
+    - name: Install apt-transport-https
+      package:
+        name: apt-transport-https
+        state: present
+    - name: Install dependencies
+      apt:
+        name: ['apt-transport-https', 'ca-certificates', 'curl', 'gnupg', 'lsb-release']
+        state: present
+    - name: Add Kubernetes apt-key
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+
+    - name: Add Kubernetes apt repository
+      apt_repository:
+        repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+        state: present
+    
+    - name: Install kubeadm, kubelet, and kubectl
+      apt:
+         name: "{{ item }}"
+         state: present
+      loop:
+         - kubeadm
+         - kubelet
+         - kubectl
+
+    - name: Ensure kubelet service is started and enabled
+      service:
+        name: kubelet
+        state: started
+        enabled: yes
+
+    - name: Print installation status
+      debug:
+        msg: "Kubernetes installed."
+     
+   
