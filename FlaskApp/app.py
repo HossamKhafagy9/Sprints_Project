@@ -7,30 +7,16 @@ app = Flask(__name__)
 mysql = MySQL()
 
 # MySQL configurations
-app.config['MYSQL_DATABASE_USER'] = os.environ['DB_USER']
-app.config['MYSQL_DATABASE_PASSWORD'] = os.environ['DB_PASSWORD']
-app.config['MYSQL_DATABASE_DB'] = os.environ['DB_NAME']
-app.config['MYSQL_DATABASE_HOST'] = os.environ['DB_HOST']
-app.config['MYSQL_DATABASE_PORT'] = int(os.environ['DB_PORT'])
+app.config['MYSQL_DATABASE_USER'] = os.environ['MYSQL_DATABASE_USER']
+app.config['MYSQL_DATABASE_PASSWORD'] = os.environ['MYSQL_DATABASE_PASSWORD']
+app.config['MYSQL_DATABASE_DB'] = os.environ['MYSQL_DATABASE_NAME']
+app.config['MYSQL_DATABASE_HOST'] = os.environ['MYSQL_DATABASE_HOST']
+app.config['MYSQL_DATABASE_PORT'] = int(os.environ['MYSQL_DATABASE_PORT'])
 
 
 mysql.init_app(app)
 
-# set a secret key for the session
-# import secrets
-# secret_key = secrets.token_hex(16)
 app.secret_key = '8a2c07687244ceade6915b407aa6da4c'
-
-### Here For Readness and Liveness Deployment
-
-# @app.route('/health')
-# def health_check():
-#     return "OK", 200
-
-
-# @app.route('/ready')
-# def readiness_check():
-#     return "OK", 200
 
 @app.route("/")
 def main():
