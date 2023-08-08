@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         AWS_DEFAULT_REGION = 'us-east-1'
-        ECR_REPOSITORY = '355102668264.dkr.ecr.us-east-1.amazonaws.com/project-ecr' # change this based on yuor ecr repositry in aws
+        ECR_REPOSITORY = '355102668264.dkr.ecr.us-east-1.amazonaws.com/project-ecr' 
     }
     
     stages {
