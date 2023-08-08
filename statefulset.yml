@@ -22,7 +22,7 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: MYSQL_DATABASE_PASSWORD
-            - name: MYSQL_DATABASE_NAME
+            - name: MYSQL_DATABASE
               value: BucketList      
             - name: MYSQL_PORT
               value: "3306"                     
