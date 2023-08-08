@@ -81,10 +81,10 @@ In your GitHub repository, go to Settings > Webhooks > Add webhook.
 
 ## Step 6: Configure Jenkins Pipeline
 
-1.get ecr url from aws add it to jenkins file in the approprtiate location
-2.Create a Multibranch Pipeline in Jenkins
-3.Create a new pipeline for your GitHub repository.
-4.Configure credentials, repository URL, and branch discovery.
+1. get ecr url from aws add it to jenkins file in the approprtiate location
+2. Create a Multibranch Pipeline in Jenkins
+3. Create a new pipeline for your GitHub repository.
+4. Configure credentials, repository URL, and branch discovery.
 
 ## Step 7: Run the Pipeline
 Commit and push changes to your GitHub repository.
